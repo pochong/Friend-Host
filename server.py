@@ -6,13 +6,13 @@ import threading
 
 class server:
     
-    PORT = 6000
-    ADDR = ('',port)
+    PORT = 6001
+    ADDR = ('',PORT)
 
     def __init__(self):
         self.clients = {}
         self.tcp_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.tcp_socket.bind(ADDR)
+        self.tcp_socket.bind(self.ADDR)
         self.tcp_socket.listen(5)
 
         threading.Thread(target=self.tcp_connection).start()
@@ -24,7 +24,7 @@ class server:
             print("Get connection from: ", addr)
 
 
-server().start()
+server()
     
     
     
