@@ -2,6 +2,10 @@ import socket
 import sys
 from tkinter import *
 import time
+import cv2
+import mss
+import numpy as np
+from PIL import ImageTk, Image
 
 
 class client:
@@ -22,9 +26,21 @@ class client:
         self.message.grid(row=0, column=0, columnspan=4, sticky=W+E+N+S, padx=5, pady=5)
         
         #the Left frame of the GUI 
-        self.mainframe = Frame(self.frame, width = 500, height = 380, bg = 'lightgrey')
-        self.mainframe.grid(row = 0, column = 0, padx = 5, pady = 5)
+        mainframe = Frame(self.frame, width = 500, height = 380, bg = 'lightgrey')
+        mainframe.grid(row = 0, column = 0, padx = 5, pady = 5)
 
+        #start to capture screen HOWEVER IT DOESNT WORK !!!!
+        def startStream():
+            scene = mss.mss()
+            screen = {"top": 40, "left": 0,"width":1000,"height":900}
+            readscreen_ms = scene.grab(screen)
+            readscreen_np = np.array(readscreen_ms)
+            readscreen = Image.fromarray(readscreen_np)
+            readscreen_tk = ImageTk.PhotoImage(image = readscreen)
+            showscreen = Label(mainframe, image = readscreen_tk)               
+            showscreen.pack()
+            print("HI")
+        
         #the Right frame of the GUI
         subframe = Frame(self.frame, width = 170, height = 380, bg = 'lightgrey')
         subframe.grid(row = 0, column = 1, padx = 5, pady = 5)
@@ -53,7 +69,7 @@ class client:
         buttons_frame.grid(row = 1, column = 0, padx = 10, pady = 0)
 
         #start button
-        start_btn = Button(buttons_frame, text = 'Start', width=8)
+        start_btn = Button(buttons_frame, text = 'Start', width=8, command = startStream)
         start_btn.grid(row = 0, column = 0, padx = 5, pady = 5)
 
         #stop button
