@@ -5,16 +5,20 @@ chunk = 4096
 audio_format = pyaudio.paInt16
 channels = 2
 rate_of_transfer = 10000
-devices = 2
 data = []
 
 p = pyaudio.PyAudio()
-device = p.get_device_info_by_index(devices)
-print(device)
-device = p.get_device_info_by_index(1)
-print(device)
+
+for i in range(p.get_device_count()):
+    dev = p.get_device_info_by_index(i)
+    if (dev['name'] == 'Stereo Mix (Realtek Audio)' and dev['hostApi'] == 0):
+        dev_index = dev['index']
+        print(dev_index)
+    else:
+        print("not found")
+
 for i in range(30):
-    stream = p.open(format=audio_format, channels=channels, rate=rate_of_transfer, input=True, output=True, frames_per_buffer=chunk, input_device_index=devices)
+    stream = p.open(format=audio_format, channels=channels, rate=rate_of_transfer, input=True, output=True, frames_per_buffer=chunk, input_device_index=dev_index)
     stream2 = p.open(format=audio_format, channels=channels, rate=rate_of_transfer, input=True, output=True, frames_per_buffer=chunk)
     data.append(stream.read(4096))
     data.append(stream2.read(4096))

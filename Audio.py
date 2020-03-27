@@ -6,16 +6,26 @@ chunk = 4096
 audio_format = pyaudio.paInt16
 channels = 2
 rate_of_transfer = 43000
+# dev_index = 2
+
+p = pyaudio.PyAudio()
+for i in range(p.get_device_count()):
+    dev = p.get_device_info_by_index(i)
+    if (dev['name'] == 'Stereo Mix (Realtek Audio)' and dev['hostApi'] == 0):
+        dev_index = dev['index']
+        print(dev_index)
+    else:
+        print("not found")
+
 #setting up the microphone
 #i = 0
 while 1 :
-    p = pyaudio.PyAudio()
     record_output = p.open(format = audio_format, 
                     channels = channels, 
                     rate = rate_of_transfer,
                     input = True,
                     frames_per_buffer = chunk,
-                    input_device_index = 2)
+                    input_device_index = dev_index)
     record_microphone = p.open(format = audio_format, 
                     channels = 1, 
                     rate = rate_of_transfer,
