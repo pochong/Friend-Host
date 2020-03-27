@@ -6,8 +6,8 @@ chunk = 4096
 audio_format = pyaudio.paInt16
 channels = 2
 rate_of_transfer = 43000
-# dev_index = 2
 
+#find stereo Mix automaticlly
 p = pyaudio.PyAudio()
 for i in range(p.get_device_count()):
     dev = p.get_device_info_by_index(i)
@@ -17,8 +17,8 @@ for i in range(p.get_device_count()):
     else:
         print("not found")
 
-#setting up the microphone
-#i = 0
+# will need to do mutithreaded for this to work properly
+# testing done in check.py instead
 while 1 :
     record_output = p.open(format = audio_format, 
                     channels = channels, 

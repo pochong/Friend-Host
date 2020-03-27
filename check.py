@@ -17,6 +17,8 @@ for i in range(p.get_device_count()):
     else:
         print("not found")
 
+# this records the voices and sounds then play it back after time is up.
+# can heard that it is fragmented, need to do mutltithread to hear it properly.
 for i in range(30):
     stream = p.open(format=audio_format, channels=channels, rate=rate_of_transfer, input=True, output=True, frames_per_buffer=chunk, input_device_index=dev_index)
     stream2 = p.open(format=audio_format, channels=channels, rate=rate_of_transfer, input=True, output=True, frames_per_buffer=chunk)
