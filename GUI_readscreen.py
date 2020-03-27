@@ -12,11 +12,18 @@ mainframe.grid(row = 0, column = 0, padx = 5, pady = 5)
 subframe = Frame(window, width = 170, height = 380, bg = 'lightgrey')
 subframe.grid(row = 0, column = 1, padx = 5, pady = 5)
 
-#chat_room = Text(subframe, width = 160, height = 200)
-#chat_room.grid(row = 0, column = 0, padx = 5, pady = 5)
+chat_room = Text(subframe, width = 30, height = 19)
+chat_room.grid(row = 0, column = 0, padx = 5, pady = 5)
 
-#text_entry = Entry(subframe)
-#text_entry.grid(row = 1, column = 0, padx = 5, pady =5)
+text_entry = Entry(subframe, width = 30)
+text_entry.grid(row = 1, column = 0, padx = 5, pady =5)
+
+def sendText():
+    chat_room.insert(END, "User : " + text_entry.get() + "\n")
+    text_entry.delete(0, END)
+text_entry.bind('<Return>', sendText)
+send_btn = Button(subframe, text = 'Send', width = 8, command=sendText)
+send_btn.grid(row = 2, column = 0, padx = 5, pady = 5)
 
 buttons_frame = Frame(window, width = 500, height = 50, bg = 'lightgrey')
 buttons_frame.grid(row = 1, column = 0, padx = 10, pady = 0)
