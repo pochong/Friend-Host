@@ -15,9 +15,9 @@ import threading
 class client:
 
     PORT = 8004
-    ip = '192.168.1.9'
+    ip = '167.99.160.18'
     ADDR = (ip,PORT)
-    username = "User1"
+    username = "User0"
 
     def __init__(self,frame):
         self.frame = frame
@@ -63,7 +63,7 @@ class client:
             try:
                 mes = self.tcp_socket.recv(4096)
                 s = mes.decode("utf-8")
-                self.chat_room.insert(END, "User : " + s + "\n")
+                self.chat_room.insert(END, self.username + " : " + s + "\n")
                 self.text_entry.delete(0, END)
             except: 
                 print("Failed to update chat room")
