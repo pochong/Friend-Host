@@ -14,10 +14,10 @@ import threading
 
 class client:
 
-    PORT = 8004
+    PORT = 9000
     ip = '167.99.160.18'
     ADDR = (ip,PORT)
-    username = "User0"
+    username = "User1"
 
     def __init__(self,frame):
         self.frame = frame

@@ -7,7 +7,7 @@ import struct
 
 class server:
     
-    PORT = 8004
+    PORT = 9000
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
