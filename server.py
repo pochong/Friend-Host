@@ -7,26 +7,31 @@ import struct
 
 class server:
     
-    PORT = 9000
+    PORT = 9026
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
+    closing_socket = []
     Size = 0
-
+    closing_size = 0
+    
     #d = b''
     def __init__(self):
         self.tcp_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.tcp_socket.bind(self.ADDR)
+        self.tcp_socket.bind(('',self.PORT))
         self.tcp_socket.listen(5)
+        self.closing_tcp_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.closing_tcp_socket.bind(('',self.PORT+1))
+        self.closing_tcp_socket.listen(5)
 
         threading.Thread(target=self.tcp_connection).start()
-
+        threading.Thread(target=self.closing_tcp_connection).start()
         self.print_list()
 
 
     def print_list(self):
         
-        while self.Size <2:
+        while self.Size <1:
             i = 1
 
         for c in self.clients_address:
@@ -65,7 +70,7 @@ class server:
     def recv_message(self,num):
         try: 
             while(True):
-                mes = self.clients_socket[num].recv(4096)
+                mes = self.clients_socket[num][1].recv(4096)
                 """
                 try: 
                     self.clients_socket[num].send(b'received')
@@ -80,25 +85,86 @@ class server:
         try: 
             i = 0
             while(i < self.Size) :
-                if(i!=num): 
-                    self.clients_socket[i].send(mes)
+                if(i!=num and self.clients_socket[i] != None): 
+                    self.clients_socket[i][1].send(mes)
                 i += 1
         except: 
             print("Failed to send message ")
+    
+    def recv_closing_message(self,num):
+        index = 0
+       
+        while(True):
+            mes = self.closing_socket[num].recv(4096)
+            s = mes.decode("utf-8")
+            lst = s.split(' ', 1)
+            print(lst)
+            n = lst[0]
+            c = lst[1]
+            for i in self.clients_socket:
+                if(i[0] == n):
+                    i[1].send(b'closed')
+                    self.clients_socket[index] = None
+                    print("found")
+                    break
+                index += 1
+        
 
-    def tcp_connection(self):
+        self.closing_socket[num] = None
+        #self.clients_socket[num] = None
+
+    def closing_tcp_connection(self):
         while True:
-            c  = self.tcp_socket.accept()
+            c  = self.closing_tcp_socket.accept()
+
+           
+            self.closing_socket.append(c[0])
+            threading.Thread(target = self.recv_closing_message,args = (self.closing_size ,)).start()
             addr = c[1]
             self.clients_address.append(addr)
-            self.clients_socket.append(c[0])
-            
+
+            self.closing_size += 1
+            """
             if self.Size == 0:
                 c[0].send(b'host')
                # threading.Thread(target = self.recv_message,args = (self.Size)).start()
             else:
                 c[0].send(b'client')
+            """
+
+
+            
+            """
+            print("Get connection from: ", addr)
+            m = ("welcome to chat room").encode('utf-8')
+            c[0].send(m)
+            """
+
+
+
+    def tcp_connection(self):
+        while True:
+            c  = self.tcp_socket.accept()
+
+            m = c[0].recv(4096)
+            m = m.decode("utf-8")
+            self.clients_socket.append((m,c[0]))
+           
+            #self.clients_socket.append(c[0])
             threading.Thread(target = self.recv_message,args = (self.Size,)).start()
+           
+            
+            addr = c[1]
+            self.clients_address.append(addr)
+            """
+            if self.Size == 0:
+                c[0].send(b'host')
+               # threading.Thread(target = self.recv_message,args = (self.Size)).start()
+            else:
+                c[0].send(b'client')
+            """
+
+            
             self.Size += 1
 
             

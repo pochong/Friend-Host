@@ -1,6 +1,6 @@
 import socket
 import sys
-import tkinter
+from tkinter import *
 import time
 import cv2
 import mss
@@ -10,26 +10,34 @@ import cv2
 import pickle
 import struct
 import threading
-import chatroom
+from chatroom import Chatroom
 
 
 class client:
 
-    PORT = 9000
-    ip = '167.99.160.18'
+    PORT = 9026
+    ip = '10.0.0.89'
+    #ip = '167.99.160.18'
     ADDR = (ip,PORT)
+
+    #DEFAULT USERNAME
     username = "User1"
     
 
-    #def __init__(self,frame):
-     #   self.frame = frame
+    def __init__(self):
+        #self.frame = frame
+        
+        #Video Capture UI
         #self.GUI()
         
-    frame = tkinter.Tk()
-    newChatroom = chatroom.Chatroom(frame, username, ADDR)
-    newChatroom.tcp_connection()
-    newChatroom.chatroom_UI()
-    frame.mainloop()
+        #Chat Room UI
+        #self.tcp_connection()
+        self.chatroom = Chatroom( self.username, self.ADDR)
+        
+        # newChatroom = chatroom.Chatroom(frame, username, ADDR)
+        # newChatroom.tcp_connection()
+        # newChatroom.chatroom_UI()
+        
         
 
     
@@ -48,8 +56,9 @@ class client:
     
 
 
-    #simple GUI for testing
+    #GUI
     def GUI(self):
+        self.frame = Tk()
         
         #self.Display = Label(self.frame, height=50,width = 200)
         #self.Display.grid(row=0, column=0, columnspan=4, sticky=W+E+N+S, padx=5, pady=5)
@@ -74,9 +83,14 @@ class client:
         self.mute_btn = Button(self.buttons_frame, text = 'Mute', width=8)
         self.mute_btn.grid(row = 0, column = 2, padx = 5, pady = 5)
 
+        frame.mainloop()
+
+    
+    
+
     
         
-    
+    """
     def read_screen(self):
         ms = mss.mss()
         screen = {"top": 40, "left": 0,"width":1000,"height":900}
@@ -121,9 +135,9 @@ class client:
             f2.write(frame)
             #print frame
             #cv2.imshow('frame',np.array(frame))
-    
+    """
 
-   
+    
 
 
 
@@ -131,5 +145,8 @@ class client:
 
 
 #frame.config(bg = "LightBlue1")
-#client(frame)
+
+
+client()
+
 
