@@ -9,12 +9,12 @@ class Chatroom:
     stop_thread = False
 
     #TODO: 
-    def __init__(self, username, ADDR):
+    def __init__(self, username, ADDR, frame):
         
         self.username = username
         self.ADDR = ADDR
         self.tcp_connection()
-        self.frame = Tk()
+        self.frame = frame
         self.frame.protocol("WM_DELETE_WINDOW",self.close)
         self.chatroom_UI()
         self.initialize()

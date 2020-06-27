@@ -34,7 +34,7 @@ class Login:
         self.login_btn.grid(row = 3, column = 0, padx = 5, pady = 5)
 
     def login_account(self):
-        self.chatroom = Chatroom( self.username_entry.get(), self.ADDR)
+        self.chatroom = Chatroom( self.username_entry.get(), self.ADDR, self.container)
         
 
 
