@@ -10,18 +10,18 @@ import cv2
 import pickle
 import struct
 import threading
-from chatroom import Chatroom
+from login import Login
 
 
 class client:
 
     PORT = 9026
-    ip = '10.0.0.89'
-    #ip = '167.99.160.18'
+    #ip = '10.0.0.89'
+    ip = '167.99.160.18'
     ADDR = (ip,PORT)
 
     #DEFAULT USERNAME
-    username = "User1"
+    #username = "User1"
     
 
     def __init__(self):
@@ -32,7 +32,8 @@ class client:
         
         #Chat Room UI
         #self.tcp_connection()
-        self.chatroom = Chatroom( self.username, self.ADDR)
+        #self.chatroom = Chatroom( self.username, self.ADDR)
+        self.login = Login()
         
         # newChatroom = chatroom.Chatroom(frame, username, ADDR)
         # newChatroom.tcp_connection()

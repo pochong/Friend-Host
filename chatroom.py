@@ -2,13 +2,14 @@ from tkinter import *
 import threading
 import socket
 
+
+
 class Chatroom:
 
     stop_thread = False
 
     #TODO: 
     def __init__(self, username, ADDR):
-        
         
         self.username = username
         self.ADDR = ADDR
@@ -35,9 +36,15 @@ class Chatroom:
         self.send_btn = Button(self.subframe, text = 'Send', width = 8, command=self.sendText)
         self.send_btn.grid(row = 2, column = 0, padx = 5, pady = 5)
 
+        #self.logout_btn = Button(self.subframe, text = 'Logout', width = 8)
+        #self.logout_btn.grid(row = 2, column = 1, padx = 5, pady = 5)
+
         #press ENTER to send message
         self.text_entry.bind('<Return>', self.sendText)
 
+
+    
+    
     #function for text entry displays in chat room
     def sendText(self):
 
