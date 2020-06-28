@@ -18,7 +18,7 @@ class Chatroom:
         self.frame.protocol("WM_DELETE_WINDOW",self.close)
         self.chatroom_UI()
         self.initialize()
-        #self.frame.mainloop()
+        self.frame.mainloop()
 
     def chatroom_UI(self):
          #the Right frame of the GUI

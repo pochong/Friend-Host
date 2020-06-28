@@ -1,7 +1,8 @@
 from tkinter import *
 from chatroom import Chatroom
+import threading
 
-PORT = 9028
+PORT = 9032
 #ip = '10.0.0.89'
 ip = '167.99.160.18'
 
@@ -35,7 +36,7 @@ class Login:
         self.login_btn.grid(row = 3, column = 0, padx = 5, pady = 5)
 
     def login_account(self):
-        self.chatroom = Chatroom( self.username_entry.get(), self.ADDR)
+        self.chatroom = Chatroom( self.name, self.ADDR)
         
 
 
@@ -45,8 +46,10 @@ class Login:
         
 
     def login_pressed(self):
-       self.login_account()
-       self.login_destroy()
+        self.name = self.username_entry.get()
+        threading.Thread(target = self.login_account).start()
+        print("destory")
+        self.login_destroy()
         
 
     def logout(self):
