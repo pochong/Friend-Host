@@ -26,16 +26,14 @@ class server:
 
         threading.Thread(target=self.tcp_connection).start()
         threading.Thread(target=self.closing_tcp_connection).start()
-        self.print_list()
+        #self.print_list()
 
 
     def print_list(self):
-        
-        while self.Size <1:
-            i = 1
-
+        print("---------------------")
         for c in self.clients_address:
             print(c)
+        print("----------------------")
 
     """
     def recv_screen(self):
@@ -112,6 +110,8 @@ class server:
 
         self.closing_socket[num] = None
         #self.clients_socket[num] = None
+        print("One client log out")
+        self.print_list()
 
     def closing_tcp_connection(self):
         while True:
@@ -164,7 +164,7 @@ class server:
                 c[0].send(b'client')
             """
 
-            
+            self.print_list()
             self.Size += 1
 
             
