@@ -10,14 +10,14 @@ class Chatroom:
 
     #TODO: 
     def __init__(self, username, ADDR):
-        
-        #self.username = username
-        #self.ADDR = ADDR
-        #self.tcp_connection()
+        pass
+        self.username = username
+        self.ADDR = ADDR
+        self.tcp_connection()
         self.frame = Tk()
-        #self.frame.protocol("WM_DELETE_WINDOW",self.close)
-        #self.chatroom_UI()
-        #self.initialize()
+        self.frame.protocol("WM_DELETE_WINDOW",self.close)
+        self.chatroom_UI()
+        self.initialize()
         #self.frame.mainloop()
 
     def chatroom_UI(self):

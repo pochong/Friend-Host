@@ -40,8 +40,8 @@ class Login:
 
 
     def login_destroy(self):
-        #self.container.destroy()
-        self.container.withdraw()
+        self.container.destroy()
+        #self.container.withdraw()
         
 
     def login_pressed(self):
