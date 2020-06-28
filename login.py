@@ -1,7 +1,7 @@
 from tkinter import *
 from chatroom import Chatroom
 
-PORT = 9026
+PORT = 9028
 #ip = '10.0.0.89'
 ip = '167.99.160.18'
 
@@ -35,7 +35,7 @@ class Login:
         self.login_btn.grid(row = 3, column = 0, padx = 5, pady = 5)
 
     def login_account(self):
-        self.chatroom = Chatroom( self.username_entry.get(), self.ADDR, self.container)
+        self.chatroom = Chatroom( self.username_entry.get(), self.ADDR)
         
 
 
