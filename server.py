@@ -3,11 +3,11 @@ import sys
 import threading
 import pickle
 import struct
-
+from message_encoder import message
 
 class server:
     
-    PORT = 9044
+    PORT = 9054
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
@@ -173,7 +173,7 @@ class server:
             threading.Thread(target = self.recv_message,args = (self.Size,)).start()
             o = message()
             mes = o.encode("server", m + " has enter the chat room")
-            self.send_message(num,mes)
+            self.send_message(self.Size,mes)
             
             addr = c[1]
             self.clients_address.append(addr)
