@@ -7,7 +7,7 @@ import struct
 
 class server:
     
-    PORT = 9028
+    PORT = 9036
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
@@ -29,9 +29,15 @@ class server:
         #self.print_list()
 
 
-    def print_list(self):
-        print("---------------------")
-        for c in self.clients_address:
+    def print_clients(self):
+        print("-------------clients_socket--------")
+        for c in self.clients_socket:
+            print(c)
+        print("----------------------")
+    
+    def print_closing(self):
+        print("-------------closing_socket--------")
+        for c in self.closing_socket:
             print(c)
         print("----------------------")
 
@@ -91,6 +97,7 @@ class server:
     
     def recv_closing_message(self,num):
         index = 0
+        print("enter closing")
        
         while(True):
             mes = self.closing_socket[num].recv(4096)
@@ -111,7 +118,8 @@ class server:
         self.closing_socket[num] = None
         #self.clients_socket[num] = None
         print("One client log out")
-        self.print_list()
+        self.print_clients()
+        self.print_closing()
 
     def closing_tcp_connection(self):
         while True:
@@ -121,9 +129,10 @@ class server:
             self.closing_socket.append(c[0])
             threading.Thread(target = self.recv_closing_message,args = (self.closing_size ,)).start()
             addr = c[1]
-            self.clients_address.append(addr)
+            #self.clients_address.append(addr)
 
             self.closing_size += 1
+            self.print_closing()
             """
             if self.Size == 0:
                 c[0].send(b'host')
@@ -164,9 +173,9 @@ class server:
                 c[0].send(b'client')
             """
 
-            self.print_list()
+            
             self.Size += 1
-
+            self.print_clients()
             
             """
             print("Get connection from: ", addr)
