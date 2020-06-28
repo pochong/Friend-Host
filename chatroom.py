@@ -80,6 +80,12 @@ class Chatroom:
             except: 
                 print("Failed to update chat room")
                 exit(0)
+        
+        try:
+            self.tcp_socket.close()
+            print("finished")
+        except:
+            print("Failed to close the tcp socket.")
         print("done")
 
 
@@ -87,11 +93,7 @@ class Chatroom:
 
 
         self.tcp_socket.send(b'')
-        try:
-            self.tcp_socket.close()
-            print("finished")
-        except:
-            print("Failed to close the tcp socket.")
+        
         
         m = "" + self.username + " closed"
         m = bytes(m,'utf-8')
@@ -119,8 +121,8 @@ class Chatroom:
         self.tcp_socket.send(m)
 
         #Second Socket: closing command transistion tcp socket
-        self.closing_tcp_socket =socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.closing_tcp_socket.connect((self.ADDR[0],self.ADDR[1] + 1))
+        # self.closing_tcp_socket =socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        # self.closing_tcp_socket.connect((self.ADDR[0],self.ADDR[1] + 1))
         
 
     #Initialization of all the functionalities. 

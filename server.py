@@ -7,7 +7,7 @@ import struct
 
 class server:
     
-    PORT = 9038
+    PORT = 9044
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
@@ -88,6 +88,11 @@ class server:
     def send_message(self,num,mes):
         if(mes == b''):
             self.clients_socket[num][1].send(mes)
+            #self.closing_socket[num] = None
+            self.clients_socket[num] = None
+            print("One client log out")
+            self.print_clients()
+            #self.print_closing()
             #mes = b'User has quit the room'
         else:
             try: 
