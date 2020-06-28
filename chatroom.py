@@ -1,7 +1,7 @@
 from tkinter import *
 import threading
 import socket
-
+from message_encoder import message
 
 
 class Chatroom:
@@ -48,7 +48,9 @@ class Chatroom:
     #function for text entry displays in chat room
     def sendText(self):
 
-        mes = bytes(self.text_entry.get(), 'utf-8')
+        m = message()
+        mes = m.encode(self.username,self.text_entry.get())
+        #mes = bytes(self.text_entry.get(), 'utf-8')
         try:
             self.tcp_socket.send(mes)
             print("Message Sent")
@@ -66,20 +68,25 @@ class Chatroom:
         self.text_entry.delete(0, END)
 
     def update_chat_room(self):
-        
+        self.chat_room.insert(END, "You have entered the chat room")
         #TODO: 
         while True: 
             #print("1")
-            try:
-                mes = self.tcp_socket.recv(4096)
-                if(mes == b''):
-                    break
-                s = mes.decode("utf-8")
-                self.chat_room.insert(END, self.username + " : " + s + "\n")
+            
+            mes = self.tcp_socket.recv(4096)
+            
+            if(mes == b''):
+                break
+            m = message()
+            m.decode(mes)
+
+            if(m.get_username() == "server"):
+                self.chat_room.insert(END, m.get_message() + "\n")
+            else:
+                #s = mes.decode("utf-8")
+                self.chat_room.insert(END, m.get_username() + " : " + m.get_message() + "\n")
                 self.text_entry.delete(0, END)
-            except: 
-                print("Failed to update chat room")
-                exit(0)
+            
         
         try:
             self.tcp_socket.close()
@@ -111,7 +118,7 @@ class Chatroom:
             
 
     #Establish tcp_connecton for chat room
-    def tcp_connection(self):
+    def tcp_connection(self):   
         #First Socket: Dara receive tcp socket
         self.tcp_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.tcp_socket.connect(self.ADDR)

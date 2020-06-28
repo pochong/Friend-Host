@@ -2,7 +2,7 @@ from tkinter import *
 from chatroom import Chatroom
 import threading
 
-PORT = 9044
+PORT = 9046
 #ip = '10.0.0.89'
 ip = '167.99.160.18'
 

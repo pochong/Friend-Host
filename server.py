@@ -171,7 +171,9 @@ class server:
            
             #self.clients_socket.append(c[0])
             threading.Thread(target = self.recv_message,args = (self.Size,)).start()
-           
+            o = message()
+            mes = o.encode("server", m + " has enter the chat room")
+            self.send_message(num,mes)
             
             addr = c[1]
             self.clients_address.append(addr)
