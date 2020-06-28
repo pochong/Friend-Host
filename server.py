@@ -7,7 +7,7 @@ import struct
 
 class server:
     
-    PORT = 9036
+    PORT = 9038
     ADDR = ('',PORT)
     clients_address = []
     clients_socket = []
@@ -86,14 +86,19 @@ class server:
             print("Failed to receive message")
         
     def send_message(self,num,mes):
-        try: 
-            i = 0
-            while(i < self.Size) :
-                if(i!=num and self.clients_socket[i] != None): 
-                    self.clients_socket[i][1].send(mes)
-                i += 1
-        except: 
-            print("Failed to send message ")
+        if(mes == b''):
+            self.clients_socket[num][1].send(mes)
+            #mes = b'User has quit the room'
+        else:
+            try: 
+                
+                i = 0
+                while(i < self.Size) :
+                    if(i!=num and self.clients_socket[i] != None): 
+                        self.clients_socket[i][1].send(mes)
+                    i += 1
+            except: 
+                print("Failed to send message ")
     
     def recv_closing_message(self,num):
         index = 0

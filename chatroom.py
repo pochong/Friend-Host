@@ -72,7 +72,7 @@ class Chatroom:
             #print("1")
             try:
                 mes = self.tcp_socket.recv(4096)
-                if(mes == b'closed'):
+                if(mes == b''):
                     break
                 s = mes.decode("utf-8")
                 self.chat_room.insert(END, self.username + " : " + s + "\n")
@@ -85,6 +85,8 @@ class Chatroom:
 
     def close(self):
 
+
+        self.tcp_socket.send(b'')
         try:
             self.tcp_socket.close()
             print("finished")
@@ -93,7 +95,7 @@ class Chatroom:
         
         m = "" + self.username + " closed"
         m = bytes(m,'utf-8')
-        self.closing_tcp_socket.send(m)
+        #self.closing_tcp_socket.send(m)
 
 
         self.frame.destroy()
