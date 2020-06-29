@@ -2,6 +2,7 @@ from tkinter import *
 import threading
 import socket
 from message_encoder import message
+from stream_display import stream
 
 
 class Chatroom:
@@ -36,8 +37,8 @@ class Chatroom:
         self.send_btn = Button(self.subframe, text = 'Send', width = 8, command=self.sendText)
         self.send_btn.grid(row = 2, column = 0, padx = 5, pady = 5)
 
-        #self.logout_btn = Button(self.subframe, text = 'Logout', width = 8)
-        #self.logout_btn.grid(row = 2, column = 1, padx = 5, pady = 5)
+        self.stream_btn = Button(self.subframe, text = 'Stream', width = 8, command=self.start_stream)
+        self.stream_btn.grid(row = 2, column = 1, padx = 5, pady = 5)
 
         #press ENTER to send message
         self.text_entry.bind('<Return>', self.sendText)
@@ -141,6 +142,8 @@ class Chatroom:
         #self.updateThread.start()
         #self.updateThread.set()
     
+    def start_stream(self):
+        self.stream = stream()
     
 
 
